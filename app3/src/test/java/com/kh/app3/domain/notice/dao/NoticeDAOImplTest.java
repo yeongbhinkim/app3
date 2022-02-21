@@ -90,9 +90,13 @@ class NoticeDAOImplTest {
   @Test
   @DisplayName("전체조회")
   void selectAll(){
+    //when
 
+    //try
     List<Notice> notices = noticeDAO.selectAll();
-    //log.info("members={}", members);
+
+    //then
     Assertions.assertThat(notices.size()).isEqualTo(2);
+    log.info("notices={}", notices);
   }
 }
