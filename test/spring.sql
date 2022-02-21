@@ -28,6 +28,9 @@ insert into member values(member_member_id_seq.nextval, 'test2@kh.com', '1234', 
 
 select * from member;
 commit;
+
+
+
 drop table notice;
 create table notice(
     notice_id number(8),
@@ -36,7 +39,7 @@ create table notice(
     author   varchar2(12),
     hit      number(5) default 0,
     cdata    timestamp default systimestamp,
-    udate   timestamp
+    udata   timestamp
     );
     
     desc notice;
@@ -51,8 +54,9 @@ alter table notice modify author constraint notice_author_nn not null;
 
 --시퀀스
 drop sequence notice_notice_id_seq;
-create sequence notice_notice_id_seq;
-start with 1
+
+create sequence notice_notice_id_seq
+start With 1
 increment by 1
 minvalue 0
 maxvalue 99999999
@@ -61,8 +65,12 @@ nocycle;
 --등록
 insert into notice (notice_id,subject,content,author)
 values(notice_notice_id_seq.nextval, '제목1','본문1','작성자1');
+
+insert into notice (notice_id,subject,content,author)
 values(notice_notice_id_seq.nextval, '제목2','본문2','작성자2');
 
+--널뛰기금지
+alter sequence notice_notice_id_seq nocache;
 
 --상세조회
 SELECT subject, content, author, cdata
@@ -88,6 +96,9 @@ update notice
 --전체조회
 select * from notice;
 
+
+
+commit;
 rollback;
 
 
