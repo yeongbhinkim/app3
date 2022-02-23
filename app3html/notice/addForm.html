@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,19 +16,19 @@
         <div class="content">
             <h3>공지사항 등록</h3>
             <hr>
-            <form th:action="@{/notice/add}" th:method="post" th:object="${addForm}">
+            <form>
                 <ul>
                     <li>
                         <span>작성자</span>
-                        <input type="text" th:field="{author}">
+                        <input type="text">
                     </li>
                     <li>
                         <span>제목</span>
-                        <input type="text" th:field="{subject}">
+                        <input type="text">
                     </li>
                     <li>
                         <span>내용</span>
-                        <textarea cols="30" rows="10" th:field="{content}"></textarea>
+                        <textarea cols="30" rows="10"></textarea>
                     </li>
                     <li>
                         <button type="button" id="writeBtn">등록</button>

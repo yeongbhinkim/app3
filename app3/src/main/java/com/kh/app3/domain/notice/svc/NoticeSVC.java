@@ -15,7 +15,7 @@ public interface NoticeSVC {
   Notice findByNoticeId(Long noticeId);
 
   //수정
-  Notice mpdify(Notice notice);
+  Notice modify(Notice notice);
 
   //삭제
   int remove(Long noticeId);

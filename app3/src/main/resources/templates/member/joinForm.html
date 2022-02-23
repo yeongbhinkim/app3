@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
@@ -37,7 +36,7 @@
     <li th:if="${#fields.hasErrors('passwdChk')}">
       <p th:errors="*{passwdChk}" th:errorclass="fieldError"></p>
     </li>
-    <li th:if="${#fields.hasErrors('global')}" >
+    <li th:if="${#fields.hasErrors('global')}">
       <p th:errors="*{global}" th:errorclass="globalError"></p>
     </li>
     <li>
@@ -63,19 +62,17 @@
       </th:block>
     </li>
 
-      <li>
-        <span>취미</span>
-        <th:block th:each=" ele : ${hobbies}">
-          <label for="" th:for="${#ids.next('hobbies')}" th:text="${ele.value}"></label>
-          <input type="checkbox" name="" id="" value="" th:value="${ele.value}" th:field="*{hobby}">
+    <li>
+      <span>취미</span>
+      <th:block th:each=" ele : ${hobbies}">
+        <label for="" th:for="${#ids.next('hobbies')}" th:text="${ele.value}"></label>
+        <input type="checkbox" name="" id="" value="" th:value="${ele.value}" th:field="*{hobby}">
 
 
-        </th:block>
+      </th:block>
 
 
-
-
-        <th:block th:remove="all">
+      <th:block th:remove="all">
         <label for="">독서</label>
         <input type="checkbox" name="" id="" value="">
         <label for="">수영</label>
@@ -84,23 +81,23 @@
         <input type="checkbox" name="" id="" value="">
         <label for="">골프</label>
         <input type="checkbox" name="" id="" value="">
+      </th:block>
+    </li>
+    <li>
+      <span>지역</span>
+      <select name="" id="" th:field="*{region}">
+        <option value="">==선 택==</option>
+        <th:block th:each=" ele : ${regions}">
+          <option value="서울" th:value="${ele}" th:text="${ele}">서울</option>
         </th:block>
-      </li>
-      <li>
-        <span>지역</span>
-        <select name="" id="" th:field="*{region}">
-          <option value="">==선 택==</option>
-          <th:block th:each=" ele : ${regions}">
-            <option value="서울" th:value="${ele}" th:text="${ele}">서울</option>
-          </th:block>
-        </select>
-      </li>
+      </select>
+    </li>
 
 
-      <li>
-        <button type="submit">가입</button>
-      </li>
-    </ul>
-  </form>
+    <li>
+      <button type="submit">가입</button>
+    </li>
+  </ul>
+</form>
 </body>
 </html>

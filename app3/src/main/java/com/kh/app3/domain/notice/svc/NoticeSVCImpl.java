@@ -50,7 +50,7 @@ public class NoticeSVCImpl implements NoticeSVC{
    * @return
    */
   @Override
-  public Notice mpdify(Notice notice) {
+  public Notice modify(Notice notice) {
     return noticeDAO.update(notice);
   }
 
