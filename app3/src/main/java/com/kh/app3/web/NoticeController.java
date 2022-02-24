@@ -27,7 +27,7 @@ public class NoticeController {
   private final NoticeSVC noticeSVC;
 
   // 등록화면 GET /notices/add
-  @GetMapping("/add")
+  @GetMapping("")
   public String addForm(@ModelAttribute AddForm addForm) {
     log.info("NoticeController.addForm() 호출됨!");
     return "notice/addForm";
@@ -39,10 +39,11 @@ public class NoticeController {
 //  }
 
   // 등록처리
-  @PostMapping("/add")
+  @PostMapping("")
   public String add(
       @ModelAttribute AddForm addForm,
-      RedirectAttributes redirectAttributes) {
+      RedirectAttributes redirectAttributes,
+      Model model) {
     
     log.info("NoticeController.add() 호출됨!");
     log.info("AddForm={}", addForm);
@@ -55,11 +56,11 @@ public class NoticeController {
     Notice writedNotice = noticeSVC.write(notice);
     redirectAttributes.addAttribute("noticeId",writedNotice.getNoticeId());
 
-    return "redirect:/notices/{noticeId}"; //http://서버:9080/notices/공지사항번호
+    return "redirect:/notices/{noticeId}/detail"; //http://서버:9080/notices/공지사항번호
   }
 
   // 상세화면
-  @GetMapping("/{noticeId}")
+  @GetMapping("/{noticeId}/detail")
   public String detailForm(@PathVariable Long noticeId, Model model) {
 
     Notice notice = noticeSVC.findByNoticeId(noticeId);
@@ -76,7 +77,7 @@ public class NoticeController {
   }
 
   // 수정화면
-  @GetMapping("/{noticeId}/edit")
+  @GetMapping("/{noticeId}")
   public String editForm(@PathVariable Long noticeId,
                          Model model) {
 
@@ -94,7 +95,7 @@ public class NoticeController {
   }
 
   // 수정처리
-  @PostMapping("/{noticeId}/edit")
+  @PatchMapping("/{noticeId}")
   public String edit(
       @ModelAttribute EditForm editForm,
       @PathVariable Long noticeId,
@@ -111,20 +112,20 @@ public class NoticeController {
 
     redirectAttributes.addAttribute("noticeId", modifiedNotice.getNoticeId());
 
-    return "redirect:/notices/{noticeId}";
+    return "redirect:/notices/{noticeId}/detail";
   }
 
   // 삭세처리
-  @GetMapping("{noticeId}/del")
+  @DeleteMapping("{noticeId}")
   public String del(@PathVariable Long noticeId) {
 
     noticeSVC.remove(noticeId);
 
-    return "redirect:/notices";
+    return "redirect:/notices/all";
   }
 
   // 전체목록
-  @GetMapping("")
+  @GetMapping("/all")
   public String list(Model model) {
 
     List<Notice> list = noticeSVC.findAll();

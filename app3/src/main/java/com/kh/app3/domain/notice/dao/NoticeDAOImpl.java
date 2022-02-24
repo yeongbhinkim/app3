@@ -77,7 +77,7 @@ public class NoticeDAOImpl implements NoticeDAO{
     sql.append("       cdata, ");
     sql.append("       udata ");
     sql.append("  from notice ");
-    sql.append(" order by notice_id asc ");
+    sql.append(" order by notice_id desc ");
 
     List<Notice> list = jdbcTemplate.query(
         sql.toString(),
