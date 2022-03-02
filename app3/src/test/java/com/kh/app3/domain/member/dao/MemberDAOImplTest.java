@@ -88,4 +88,14 @@ public class MemberDAOImplTest {
     Assertions.assertThat(member).isNotNull();
 
   }
+
+  @Test
+  @DisplayName("이메일찾기By별칭")
+  void findEmailByNickname(){
+
+    String nickname ="테스터2";
+    String findedEmail = memberDAO.findEmailByNickname(nickname);
+    Assertions.assertThat(findedEmail).isEqualTo("test123@kh.com");
+  }
+
 }

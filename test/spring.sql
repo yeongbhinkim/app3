@@ -1,3 +1,5 @@
+--회원
+
 drop table member;
 
 create table member (
@@ -24,12 +26,12 @@ create sequence member_member_id_seq;
 desc member;
 
 insert into member values(member_member_id_seq.nextval, 'test1@kh.com', '1234', '테스터1','남자','등산','울산');
-insert into member values(member_member_id_seq.nextval, 'test2@kh.com', '1234', '테스터2','여자','골프','서울');
+insert into member values(member_member_id_seq.nextval, 'test123@kh.com', '123412', '테스터2','여자','골프','서울');
 
 select * from member;
 commit;
 
-
+--공지사항
 
 drop table notice;
 create table notice(
@@ -96,13 +98,13 @@ update notice
 --전체조회
 select * from notice;
 
-
-
 commit;
 rollback;
 
-
-
+--회원찾기
+SELECT email
+     FROM member
+ where nickname = '테스터1';
 
 
 
