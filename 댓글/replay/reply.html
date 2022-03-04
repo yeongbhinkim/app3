@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>댓글달기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+  <link rel="stylesheet" href="./modal.css">
+  <link rel="stylesheet" href="./reply.css">
+  <script defer src="./modal.js"></script>
+  <script defer type="module"  src="./reply.js"></script>
+</head>
+<body>
+  <!--댓글 영역-->
+  <div class="wrapper-comments">
+    <!--댓글 작성-->
+    <div class="comment write">
+      <div class="profileImg">
+        <img src="https://picsum.photos/50" alt="프로파일">
+      </div>
+      <div class="rcontent write" contenteditable data-placeholder="댓글 추가..."></div>
+      <div class="btngrp write">
+        <button type="button" class="cancelBtn" data-button-name="cancel">취소</button>
+        <button type="button" class="writeBtn"  data-button-name="write">댓글</button>
+      </div>
+    </div>
+    <!--댓글 목록-->
+    <div class="comments">
+      <!--depth1-->
+      <div class="comment-parent" data-rnum="1" data-rid="1" >
+        <div class="content">
+          <div class="content-left">
+            <div class="profileImg"><img src="https://picsum.photos/50" alt="프로파일"></div>
+          </div>
+          <div class="content-right">
+            <div class="writer"><span class="nickname">별칭</span><span class="cdate">작성일시</span></div>
+            <div class="rcontent read">댓글1</div>
+            <div class="btngrp read">
+              <button class="prefer rgood" data-title="좋아요" data-button-name="rgood"><i class="fas fa-thumbs-up" ></i></button><span class="rgood">3</span>
+              <button class="prefer rbad"  data-title="싫어요" data-button-name="rbad"><i class="fas fa-thumbs-down" ></i></button><span class="rbad">2</span>
+              <button type="button" class="rereplyBtn" data-button-name="rereply">답글</button>
+            </div>
+            <div class="hiddenItem hidden">
+              <button class="icon"><img src="./icon_more_vert.svg" alt=""></button>
+              <ul class="menu hidden">
+                <li><button class="modifyBtn" data-button-name="modify"><i class="fas fa-eraser"></i>수정</button></li>
+                <li><button class="deleteBtn" data-button-name="delete"><i class="fas fa-trash-alt"></i>삭제</button></li>
+             </ul>
+             <ul class="menu2 hidden">
+              <li><button class="chargeBtn" data-button-name="charge"><i class="fas fa-bullhorn"></i>신고</button></li>
+             </ul>             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="comment-parent" data-rnum="2" data-rid="2" >
+        <div class="content">
+          <div class="content-left">
+            <div class="profileImg"><img src="https://picsum.photos/50" alt="프로파일"></div>
+          </div>
+          <div class="content-right">
+            <div class="writer"><span class="nickname">별칭</span><span class="cdate">작성일시</span></div>
+            <div class="rcontent read">댓글1</div>
+            <div class="btngrp read">
+              <button class="prefer rgood" data-title="좋아요" data-button-name="rgood"><i class="fas fa-thumbs-up" ></i></button><span class="rgood">3</span>
+              <button class="prefer rbad"  data-title="싫어요" data-button-name="rbad"><i class="fas fa-thumbs-down" ></i></button><span class="rbad">2</span>
+              <button type="button" class="rereplyBtn" data-button-name="rereply">답글</button>
+            </div>
+            <div class="hiddenItem hidden">
+              <button class="icon"><img src="./icon_more_vert.svg" alt=""></button>
+              <ul class="menu hidden">
+                <li><button class="modifyBtn" data-button-name="modify"><i class="fas fa-eraser"></i>수정</button></li>
+                <li><button class="deleteBtn" data-button-name="delete"><i class="fas fa-trash-alt"></i>삭제</button></li>
+             </ul>
+             <ul class="menu2 hidden">
+              <li><button class="chargeBtn" data-button-name="charge"><i class="fas fa-bullhorn"></i>신고</button></li>
+             </ul>             
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="content-right">
+        <div class="rcontent modify" contenteditable>댓글수정사항</div>
+        <div class="btngrp modify">
+          <button type="button" class="cancelBtn" data-button-name="cancel">취소</button>
+          <button type="button" class="modifyBtn"  data-button-name="modify">수정</button>
+        </div>
+      </div> -->
+      
+      <!-- <div class="comment rewrite">
+        <div class="profileImg">
+          <img src="https://picsum.photos/50" alt="프로파일">
+        </div>
+        <div class="rcontent" contenteditable data-placeholder="댓글 추가..."></div>
+        <div class="btngrp">
+          <button type="button" class="cancelBtn" data-button-name="cancel">취소</button>
+          <button type="button" class="writeBtn"  data-button-name="write">댓글</button>
+        </div>
+      </div> -->
+
+      <!--depth2-->
+      <div class="comment-child" data-rnum="11" data-rid="3" data-prnum="">
+        <div class="content">
+          <div class="content-left">
+            <div class="profileImg"><img src="https://picsum.photos/50" alt="프로파일"></div>
+          </div>
+          <div class="content-right">
+            <div class="writer"><span class="nickname">별칭</span><span class="cdate">작성일시</span></div>
+            <div class="rcontent read">댓글1</div>
+            <div class="btngrp read">
+              <button class="prefer rgood" data-title="좋아요" data-button-name="rgood"><i class="fas fa-thumbs-up" ></i></button><span class="rgood">3</span>
+              <button class="prefer rbad"  data-title="싫어요" data-button-name="rbad"><i class="fas fa-thumbs-down" ></i></button><span class="rbad">2</span>
+              <button type="button" class="rereplyBtn" data-button-name="rereply">답글</button>
+            </div>
+            <div class="hiddenItem hidden">
+              <button class="icon"><img src="./icon_more_vert.svg" alt=""></button>
+              <ul class="menu hidden">
+                <li><button class="modifyBtn" data-button-name="modify"><i class="fas fa-eraser"></i>수정</button></li>
+                <li><button class="deleteBtn" data-button-name="delete"><i class="fas fa-trash-alt"></i>삭제</button></li>
+              </ul>
+              <ul class="menu2 hidden">
+                <li><button class="chargeBtn" data-button-name="charge"><i class="fas fa-bullhorn"></i>신고</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="comment-child" data-rnum="12" data-rid="1" data-prnum="">
+        <div class="content">
+          <div class="content-left">
+            <div class="profileImg"><img src="https://picsum.photos/50" alt="프로파일"></div>
+          </div>
+          <div class="content-right">
+            <div class="writer"><span class="nickname">별칭</span><span class="cdate">작성일시</span></div>
+            <div class="rcontent read">댓글1</div>
+            <div class="btngrp read">
+              <button class="prefer rgood" data-title="좋아요" data-button-name="rgood"><i class="fas fa-thumbs-up" ></i></button><span class="rgood">3</span>
+              <button class="prefer rbad"  data-title="싫어요" data-button-name="rbad"><i class="fas fa-thumbs-down" ></i></button><span class="rbad">2</span>
+              <button type="button" class="rereplyBtn" data-button-name="rereply">답글</button>
+            </div>
+            <div class="hiddenItem hidden">
+              <button class="icon"><img src="./icon_more_vert.svg" alt=""></button>
+              <ul class="menu hidden">
+                <li><button class="modifyBtn" data-button-name="modify"><i class="fas fa-eraser"></i>수정</button></li>
+                <li><button class="deleteBtn" data-button-name="delete"><i class="fas fa-trash-alt"></i>삭제</button></li>
+             </ul>
+             <ul class="menu2 ">
+              <li><button class="chargeBtn" data-button-name="charge"><i class="fas fa-bullhorn"></i>신고</button></li>
+              </ul>             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--페이징-->
+    <div class="paging"></div>
+  </div>
+</body>
+</html>

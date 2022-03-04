@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+</head>
+
+<body>
+  <form action="">
+    <p>작성자 아이디 <input type="text" id="email"></p>
+    <p>별칭 <input type="text" id="nickname"></p>
+    <p>내용 <textarea id="content" cols="10" rows="3"></textarea></p>
+    <!-- <p>가격 <input type="text" id="price"></p> -->
+  </form>
+
+
+  <div><button id="createBtn">등록</button></div>
+  <div><button id="listBtn">목록</button></div>
+  <div><input type="text" id="detailItemId"><button id="detailBtn">조회</button></div>
+  <!-- <div><input type="text" id="delItemId"><button id="delBtn">삭제</button></div> -->
+
+  <div>상품목록</div>
+  <div id="itemList"></div>
+
+  <script>
+    createBtn.addEventListener('click', create_f);
+    listBtn.addEventListener('click', list_f);
+    detailBtn.addEventListener('click', detail_f);
+    // delBtn.addEventListener('click', del_f);
+
+    // const payload = {
+    //   name: "모니터",
+    //   brand: "삼성",
+    //   desc: "삼성모니터40인치",
+    //   price: 400000
+    // };
+
+    //console.log(payload);
+
+    //상품등록
+    function create_f(e) {
+
+      const data = {};
+      data.email = email.value;
+      data.nickname = nickname.value;
+      data.content = content.value;
+     
+
+
+      fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data) // js객체 => json포맷 문자열 변환
+      }).then(res => res.json()) // json포맷 문자열 => js객체 변환
+        .then(res => { console.log(res); list_f(); })
+        .catch(err => { console.error('Err:', err) });
+      console.log('after fetch');
+    }
+
+    //상품목록 가져오기
+    function list_f(e) {
+      fetch('/api/comments', {
+        method: 'GET'
+      }).then(res => res.json())
+        .then(res => printItemList(res))
+        .catch(err => { console.error('Err:', err) });
+    }
+
+    //상품목록 출력
+    function printItemList(res) {
+      console.log(res);
+      let html = '';
+
+      if (res.rtcd === '00') { //목록이 있는 경우
+        res.data.forEach(item => {
+          html += `<p>`;
+          html += `댓글ID:${item.id}, 작성자아이디:${item.email}, 별칭:${item.nickname}, 내용:${item.content}`;
+          html += `<button data-item-id='${item.id}' onclick='del_f(event)'>삭제</button>`;
+          html += `</p>`;
+        });
+      } else if (res.rtcd === '02') { //목록이 없는 경우
+        html = '';
+      } else {
+        alert(res.rtmsg);
+      }
+      itemList.innerHTML = html;
+    }
+
+    // //상품 아이템 삭제
+    // function delItem(e){
+    // console.log(e.target);
+    // del_f()
+    // }
+
+
+    //상품상세
+    function detail_f(e) {
+      const url = `/api/comments/${detailItemId.value}`
+      fetch(url, {
+        method: 'GET'
+      }).then(res => res.json())
+        .then(res => { console.log(res) })
+        .catch(err => { console.error('Err:', err) });
+    }
+
+    //상품삭제
+    function del_f(e) {
+      const url = `/api/comments/${e.target.dataset.itemId}`
+      fetch(url, {
+        method: 'DELETE'
+      }).then(res => res.json())
+        .then(res => { console.log(res); list_f(); })
+        .catch(err => { console.error('Err:', err) });
+    }
+
+
+  </script>
+</body>
+
+</html>
