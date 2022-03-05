@@ -57,7 +57,6 @@ public class CommentDaoImpl implements CommentDao{
     return store.put(id, comment); //key에 대한 수정전의 comment반환
   }
 
-
   //저장소 clear 전체삭제
   @Override
   public void clearStore() {
