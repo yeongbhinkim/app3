@@ -57,7 +57,7 @@
       }).then(res => res.json()) // json포맷 문자열 => js객체 변환
         .then(res => { console.log(res); list_f(); })
         .catch(err => { console.error('Err:', err) });
-      console.log('after fetch');
+      // console.log('after fetch');
     }
 
     //상품목록 가져오기
@@ -80,7 +80,6 @@
           html += `댓글ID:${item.id}, 작성자아이디:${item.email}, 별칭:${item.nickname}, 내용:${item.content} <br>작성일시:${item.cdate},수정일시:${item.udate}`;
           html += `<button data-item-id='${item.id}' onclick='del_f(event)'>삭제</button>`;
           html += `<button data-item-id='${item.id}' onclick='update_f(event)'>수정</button>`;
-
           html += `</p>`;
         });
       } else if (res.rtcd === '02') { //목록이 없는 경우
@@ -89,7 +88,8 @@
         alert(res.rtmsg);
       }
       itemList.innerHTML = html;
-    }
+    }    
+    
 
     // //상품 아이템 삭제
     // function delItem(e){
@@ -99,14 +99,49 @@
 
 
     //상품상세
-    function detail_f(e) {
+    function detail_f(e) {    
       const url = `/api/comments/${detailItemId.value}`
       fetch(url, {
         method: 'GET'
       }).then(res => res.json())
-        .then(res => { console.log(res) })
+        .then(res => { console.log(res);})
         .catch(err => { console.error('Err:', err) });
-    }
+    } 
+
+    
+    // //상품상세
+    // function detail_f(e) {    
+    //   const url = `/api/comments/${detailItemId.value}`
+    //   fetch(url, {
+    //     method: 'GET'
+    //   }).then(res => res.json())
+    //     .then(res => {printItem(res.data)})
+    //     .catch(err => { console.error('Err:', err) });
+    // } 
+
+    //     //상품목록 출력
+    //     function printItem(data) {
+    //       let html = '';
+          
+    //       if (res.rtcd === '00') { //목록이 있는 경우
+    //         // res = JSON.parse(res);
+    //         console.log(res);
+
+    //     res.data(item => {
+    //       html += `<p>`;
+    //       html += `댓글ID:${item.id}, 작성자아이디:${item.email}, 별칭:${item.nickname}, 내용:${item.content} <br>작성일시:${item.cdate},수정일시:${item.udate}`;
+    //       html += `<button data-item-id='${item.id}' onclick='del_f(event)'>삭제</button>`;
+    //       html += `<button data-item-id='${item.id}' onclick='update_f(event)'>수정</button>`;
+    //       html += `</p>`;
+    //     });
+    //   } else if (res.rtcd === '02') { //목록이 없는 경우
+    //     html = '';
+    //   } else {
+    //     alert(res.rtmsg);
+    //   }
+    //   itemList.innerHTML = html;0
+    // }  
+
 
     //상품삭제
     function del_f(e) {

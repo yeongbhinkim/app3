@@ -53,6 +53,7 @@ public class CommentDaoImpl implements CommentDao{
   @Override
   public Comment update(Long id, Comment comment) {
     comment.setId(id);
+    comment.setCdate(store.get(id).getCdate()); //수정전의 생성일시를 가져오는
     comment.setUdate(LocalDateTime.now());
     return store.put(id, comment); //key에 대한 수정전의 comment반환
   }

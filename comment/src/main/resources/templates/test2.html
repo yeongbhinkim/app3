@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>댓글관리</title>
+  <style>
+    .comments-wrap {
+      width: 1000px;
+      display: grid;
+      grid-template-columns: 30px 150px 100px 180px 180px 1fr 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <form action="">
+      <input type="hidden" name="" id="commentId" class="textContents" />
+      email : <input type="text" name="" id="email" class="textContents" /><br />
+      별칭 : <input type="text" name="" id="nickname" class="textContents" /><br />
+      댓글 : <textarea name="" id="comment" class="textContents" cols="30" rows="10"></textarea><br />
+      <button type="button" id="saveBtn">등록</button><button type="reset">취소</button>
+    </form>
+  </div>
+  <hr />
+  <div class="comments-wrap">
+    <!-- <div>ID</div>
+      <div>email</div>
+      <div>별칭</div>
+      <div>작성일</div>
+      <div>수정일</div>
+      <div>내용</div>
+      <div></div>
+      <div></div>
+
+      <div>1</div>
+      <div>test@kh.com</div>
+      <div>테스터1</div>
+      <div>2022-03-07</div>
+      <div>2022-03-08</div>
+      <div>댓글1</div>
+      <div><button id="delBtn" data-comment-id="1">삭제</button></div>
+      <div><button>수정</button></div> -->
+  </div>
+  <hr />
+  <!-- <div><button id="saveBtn">등록</button></div> -->
+  <!-- <div><button id="listBtn">목록</button></div> -->
+  <!-- <div><button id="detailBtn">조회</button></div> -->
+  <!-- <div><button id="delBtn">삭제</button></div> -->
+  <!-- <div><button id="updateBtn">수정</button></div> -->
+  <!-- <div><button id="delAllBtn">전체삭제</button></div> -->
+
+  <script>
+    $textContents = document.querySelectorAll('.textContents');
+
+    saveBtn?.addEventListener('click', (evt) => {
+      if (evt.target.textContent === '등록') {
+        return saveBtn_f();
+      } else if (evt.target.textContent === '수정') {
+        return updateBtn_f();
+      }
+    });
+    // listBtn?.addEventListener('click', listBtn_f);
+    // detailBtn?.addEventListener('click', detailBtn_f);
+    // delBtn?.addEventListener('click', delBtn_f);
+    // updateBtn?.addEventListener('click', updateBtn_f);
+    // delAllBtn?.addEventListener('click', delAllBtn_f);
+
+    document.querySelector('.comments-wrap').addEventListener('click', (evt) => {
+      const [...classValues] = evt.target.classList; //스프레드 문법
+      //const classValues = Array.from(evt.target.classList)
+
+      //댓글 단건 삭제
+      if (classValues.includes('delBtn')) {
+        console.log('삭제버튼!');
+        const commentId = evt.target.dataset.commentId; //삭제할 댓글 아이디 찾기
+        delBtn_f(commentId);
+        return;
+      }
+
+      //댓글 수정
+      if (classValues.includes('updateBtn')) {
+        console.log('수정버튼!');
+        const commentId = evt.target.dataset.commentId; //수정할 댓글 아이디 찾기
+        detailBtn_f(commentId);
+      }
+
+      //댓글 전체 삭제
+      if (classValues.includes('delAllBtn')) {
+        console.log('전체 삭제버튼!');
+        delAllBtn_f();
+        return;
+      }
+    });
+
+    //초기화면 목록 불러오기
+    listBtn_f();
+    
+    //공백
+    function textContents_f(e){
+      $textContents.forEach((e) => {e.value = '';});}
+
+    //등록
+    function saveBtn_f(e) {
+      const data = `{
+          "email": "test1@kh.com",
+          "nickname": "테스터1",
+          "content": "댓글1"
+        }`;
+
+      const data2 = {
+        email: 'test1@kh.com',
+        nickname: '테스터1',
+        content: '댓글1',
+      };
+
+      const data3 = {
+        email: email.value,
+        nickname: nickname.value,
+        content: comment.value,
+      };
+
+      fetch('http://localhost:8080/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // body: data,
+        body: JSON.stringify(data3), //js객체를 json포맷 문자열로 변환
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          listBtn_f();
+          textContents_f();
+        })
+        .catch((err) => console.log(err));
+    }
+
+    //목록
+    function listBtn_f(e) {
+      fetch('http://localhost:8080/api/comments', {
+        method: 'GET',
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          if (!(res.data === null)) displayComments(res.data);
+        })
+        .catch((err) => {
+          console.error('Err:', err);
+        });
+      console.log('after fetch');
+    }
+
+    //조회
+    function detailBtn_f(commentId) {
+      const url = `http://localhost:8080/api/comments/${commentId}`;
+      fetch(url, {
+        method: 'GET',
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.rtcd === '00') {
+            console.log(res.data);
+            const comment = res.data;
+            document.getElementById('commentId').value = comment.id;
+            document.getElementById('email').value = comment.email;
+            document.getElementById('nickname').value = comment.nickname;
+            document.getElementById('comment').value = comment.content;
+
+            saveBtn.textContent = '수정';
+          } else {
+            console.log(res.rtmsg);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    //삭제
+    function delBtn_f(commentId) {
+      if (!confirm('삭제하시겠습니까?')) return;
+
+      const url = `http://localhost:8080/api/comments/${commentId}`;
+      fetch(url, {
+        method: 'DELETE',
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.rtcd === '00') {
+            listBtn_f();
+          } else {
+            console.log(res.rtmsg);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    //수정
+    function updateBtn_f(e) {
+      const data3 = {
+        email: email.value,
+        nickname: nickname.value,
+        content: comment.value,
+      };
+
+      const url = `http://localhost:8080/api/comments/${commentId.value}`;
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // body: data,
+        body: JSON.stringify(data3), //js객체를 json포맷 문자열로 변환
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.rtcd === '00') {
+            console.log(res);
+            listBtn_f();
+            textContents_f();
+            saveBtn.textContent = '등록';
+          } else {
+            console.log(res.rtmsg);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    //전체삭제
+    function delAllBtn_f(e) {
+      if (!confirm('전체 삭제하시겠습니까?')) return;
+
+      const url = `http://localhost:8080/api/comments`;
+      fetch(url, {
+        method: 'DELETE',
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.rtcd === '00') {
+            document.querySelector('.comments-wrap').innerHTML = ''; //목록닫기?
+            // listBtn_f();
+          } else if (res.rtcd === '01') {
+            alert(res.rtmsg);
+          } else {
+            console.log(res.rtmsg);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    //목록 표시하기
+    function displayComments(data) {
+      console.log(data);
+
+      const header = `<div>ID</div>
+        <div>email</div>
+        <div>별칭</div>
+        <div>작성일</div>
+        <div>수정일</div>
+        <div>내용</div>
+        <div><button type="button" class="delAllBtn">전체삭제</button></div>`;
+
+      let body = ``;
+      data.forEach((comment) => {
+        body += `<div>${comment.id}</div>
+            <div>${comment.email}</div>
+            <div>${comment.nickname}</div>
+            <div>${comment.cdate}</div>
+            <div>${comment.udate}</div>
+            <div>${comment.content}</div>
+            <div>
+              <button class="delBtn" data-comment-id="${comment.id}">삭제</button>
+              <button class="updateBtn" data-comment-id="${comment.id}">수정</button>
+            </div>`;
+      });
+
+      const $commentWrap = document.querySelector('.comments-wrap');
+      $commentWrap.innerHTML = header + body;
+    }
+  </script>
+</body>
+
+</html>
