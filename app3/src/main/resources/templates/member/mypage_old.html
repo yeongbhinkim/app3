@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
@@ -12,6 +11,9 @@
   <ul>
     <li><a th:href="@{|/members/${loginMember.email}/detail|}">내정보조회</a></li>
     <li><a th:href="@{|/members/${loginMember.email}/edit|}">내정보수정</a></li>
+    <li><a href="/map">지도API</a></li>
+    <li><a href="/covid">코비드 연령별, 성별 감염현황</a></li>
+    <li><a href="/bbs">게시판</a></li>
     <li><a th:href="@{|/members/${loginMember.email}/out|}">탈퇴</a></li>
   </ul>
 </body>

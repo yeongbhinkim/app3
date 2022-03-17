@@ -1,0 +1,21 @@
+서버 : Rest API 구현
+1. Comment.java 댓글번호(id),작성자아이디(email), 작성자(nickname), 댓글내용(content)
+2. CommentDAO.java
+   댓글작성, 댓글목록, 댓글조회, 댓글수정, 댓글삭제   
+3. CommentDAOImpl.java
+4. ApiReplyController
+   댓글작성, post       /api/comments
+   댓글목록, get        /api/comments
+   댓글조회, get        /api/comments/{id}
+   댓글수정, patch    /api/comments/{id}
+   댓글삭제, delete    /api/comments/{id}   
+   댓글전체삭제, delete  /api/comments
+5. 포스트맨으로 테스트해보기
+   댓글작성, 댓글목록, 댓글조회, 댓글수정, 댓글삭제
+
+클라이언트 : AJAX 요청 - fetch함수 사용
+6. ReplyController
+   get /comment
+7. comment.html
+   데이터 송수신 
+   댓글작성, 댓글목록, 댓글조회, 댓글수정, 댓글삭제

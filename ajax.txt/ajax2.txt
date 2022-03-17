@@ -1,0 +1,4 @@
+AJAX
+	1. XMLHttpRequest 객체이용
+	2. fetch메소드 이용
+	3. async/await 사용

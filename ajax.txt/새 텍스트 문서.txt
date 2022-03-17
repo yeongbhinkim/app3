@@ -1,0 +1,8 @@
+~{templatename::fragment} or ~~{templatename::selector}
+
+~{ } : empty fragment , no markup 플레그먼트를 반영하지 않음
+
+_    : no-operation token 플래그먼트를 기본값으로 설정
+
+th:insert 		지정 플래그먼트를 호스트 태그 바디로 삽입
+th:replace	호스트 태그를 교체

@@ -1,0 +1,15 @@
+
+GET	: 조회	select
+POST 	: 생성	create
+PATCH 	: 수정	update
+PUT 	: 대체	
+DELETE 	: 삭제	delete
+
+상품서비스를 위한 REST API  구축
+
+상품등록 post	/ items
+상품목록 get	/ items
+상품조회 get	/ items/{id}	,  /item?id=1
+상품수정 patch	/ items/{id}
+상품삭제 delete	/ items/{id}
+

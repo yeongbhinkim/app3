@@ -1,0 +1,4 @@
+1. Entity :  db 테이블과 매칭되는 객체
+2. DTO(Data Transfer Object) : 계층간 이동시 사용되는 객체
+   VO(Value Object) : 불변객체
+3. Command, Form : 화면과 바인딩되는 객체

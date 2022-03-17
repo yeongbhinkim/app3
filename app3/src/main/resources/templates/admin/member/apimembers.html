@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,48 +28,45 @@
       <th>1234</th>
       <th>테스터1</th>
     </tr>
-    <tr>
-      <th>2</th>
-      <th>002</th>
-      <th>test2@kh.com</th>
-      <th>1234</th>
-      <th>테스터2</th>
-    </tr>
     </tbody>
+    <!--    <tr>-->
+    <!--      <th>2</th>-->
+    <!--      <th>002</th>-->
+    <!--      <th>test2@kh.com</th>-->
+    <!--      <th>1234</th>-->
+    <!--      <th>테스터2</th>-->
+    <!--    </tr>-->
   </table>
 </div>
-
 <script>
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET','/api/members');
-  xhr.addEventListener('load',e=>{
-    if(xhr.status == 200){
-      console.log(xhr.response); //json 포맷의 문자열 수신확인
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/members');
+    xhr.addEventListener('load', e => {
+      if (xhr.status = 200) {
+        console.log(xhr.response);  // json포맷의 문자열 수신 확인
 
-      const obj = JSON.parse(xhr.response); //json 포맷 문자열 => js 객체로 변환
-      console.log(obj);
-      if(obj.rtcd ==='00'){
-            console.log(obj.data);
+        const obj = JSON.parse(xhr.response);  // json포맷 문자열 => js객체로 변환
+        if (obj.rtcd === '00') {
+          console.log(obj.data);
 
-            let str = '';
-            obj.data.forEach((member,idx)=>{
-              str+=`<tr>
-                <th>${idx+1}</th>
-                <th>${member.memberId}</th>
-                <th>${member.email}</th>
-                <th>${member.passwd}</th>
-                <th>${member.nickname}</th>
-              </tr>`;
-            });
-        memberList.innerHTML = str;
-        }else{
-            console.err('Error', xhr.status, xhr.statusText);
+          let str = '';
+          obj.data.forEach((member, idx) => {
+
+            str += `<tr>
+            <th>${idx + 1}</th>
+            <th>${member.memberId}</th>
+            <th>${member.email}</th>
+            <th>${member.passwd}</th>
+            <th>${member.nickname}</th>
+          </tr>`;
+            memberList.innerHTML = str;
+          });
+        } else {
+          console.err('Error', xhr.status, xhr.statusText);
+        }
       }
-  }
-  });
-  xhr.send();
-
-
-</script>
+    });
+    xhr.send();
+  </script>
 </body>
 </html>

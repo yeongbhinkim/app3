@@ -25,6 +25,12 @@
         <th>회원아이디</th>
         <th>비밀번호</th>
         <th>별칭</th>
+        <!-- 임의 추가한 구간 -->
+        <th>성별</th>
+        <th>취미</th>
+        <th>지역</th>
+        <!-- end of 임의 추가한 구간 -->
+
       </tr>
     </thead>
     <tbody>
@@ -35,6 +41,11 @@
           <td class="first-row" ><a th:href="@{|/admin/members/${member.email}/|}" th:text="${member.email}"></a></td>
           <td class="first-row" th:text="${member.passwd}"></td>
           <td class="first-row" th:text="${member.nickname}"></td>
+          <!-- 임의 추가한 구간 -->
+          <td class="first-row" th:text="${member.gender}"></td>
+          <td class="first-row" th:text="${member.hobby}"></td>
+          <td class="first-row" th:text="${member.region}"></td>
+          <!-- end of 임의 추가한 구간 -->
         </th:block>
         <th:block th:unless="${memberStat.first}">
           <td th:text="${memberStat.count}"></td>
@@ -42,6 +53,11 @@
           <td> <a th:href="@{|/admin/members/${member.email}/|}" th:text="${member.email}"></a></td>
           <td th:text="${member.passwd}"></td>
           <td th:text="${member.nickname}"></td>
+          <!-- 임의 추가한 구간 -->
+          <td th:text="${member.gender}"></td>
+          <td th:text="${member.hobby}"></td>
+          <td th:text="${member.region}"></td>
+          <!-- end of 임의 추가한 구간 -->
         </th:block>
       </tr>
     </tbody>

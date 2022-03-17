@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>공지사항 목록</title>
-  <link rel="stylesheet" href="../css/notice/common.css"  th:href="@{/css/notice/common.css}">
+  <link rel="stylesheet" href="../css/notice/common.css" th:href="@{/css/notice/common.css}">
   <style>
     div {outline: 1px solid red;}
     .cont {
       display: grid;
-      grid-template-columns: 50px 1fr 100px 170px 70px;
+      grid-template-columns: 50px 5fr 100px 100px 70px;
       grid-auto-rows: 2em;
     }
     .btn-grp {
@@ -21,57 +21,72 @@
   </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="content">
-    <h3>공지사항 목록</h3>
-    <hr>
-    <div class="cont">
-      <div class="col">NO</div>
-      <div class="col">제목</div>
-      <div class="col">작성일</div>
-      <div class="col">작성시간</div>
-      <div class="col">조회수</div>
+  <div class="wrap">
+    <div class="content">
+      <h3>공지사항 목록</h3>
+      <hr>
+        <div class="cont">
+          <div class="col">NO</div>
+          <div class="col">제목</div>
+          <div class="col">작성일</div>
+          <div class="col">작성시간</div>
+          <div class="col">조회수</div>
 
-      <th:block th:each="item : ${notices}">
-        <div class="col" th:text="${itemStat.count}">1</div>
-        <div class="col">
-          <a href="" th:href="@{|/notices/${item.noticeId}/detail|}" th:text="${item.subject}">제목1</a>
+          <th:block th:each=" item : ${notices}">
+
+            <div class="col" th:text="${item.noticeId}">2</div>
+            <div class="col">
+              <a href="" th:href="@{|/notices/${item.noticeId}/detail|}" th:text="${item.subject}">제목2</a>
+            </div>
+            <div class="col" th:text="${item.cdate}">2022/02/22</div>
+            <div class="col" th:text="${item.ctime}">2022/02/22</div>
+            <div class="col" th:text="${item.hit}">20</div>
+
+          </th:block>
+
+          <th:block th:remove="all">
+
+            <div class="col">1</div>
+            <div class="col">제목1</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">10</div>
+
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+          </th:block>
         </div>
-        <div class="col" th:text="${item.cdata}">2022/02/22</div>
-        <div class="col" th:text="${item.ctime}">2022/02/22</div>
-        <div class="col" th:text="${item.hit}">10</div>
-      </th:block>
-
-      <th:block th:remove="all">
-        <div class="col">1</div>
-        <div class="col">제목1</div>
-        <div class="col">2022/02/22</div>
-        <div class="col">10</div>
-
-        <div class="col">2</div>
-        <div class="col">제목2</div>
-        <div class="col">2022/02/22</div>
-        <div class="col">20</div>
-
-        <div class="col">3</div>
-        <div class="col">제목3</div>
-        <div class="col">2022/02/22</div>
-        <div class="col">5</div>
-      </th:block>
+        <div class="btn-grp">
+          <button type="button" id="writeBtn">작성</button>
+        </div>
     </div>
-    <div class="btn-grp">
-      <button type="button" id="writeBtn">작성</button>
     </div>
-  </div>
-</div>
 
-<script>
+    <script>
       const $writeBtn = document.getElementById('writeBtn');
       $writeBtn.addEventListener('click', ()=>{
-      const url = `/notices`;
-      location.href=url;
+        const url = `/notices`;
+        location.href=url
       });
-</script>
+    </script>
 
 </body>
 </html>

@@ -1,5 +1,4 @@
 --회원
-
 drop table member;
 
 create table member (
@@ -30,7 +29,7 @@ insert into member values(member_member_id_seq.nextval, 'test123@kh.com', '12341
 
 select * from member;
 commit;
-
+-----------------------------------------------------------------------
 --공지사항
 
 drop table notice;
@@ -105,7 +104,192 @@ rollback;
 SELECT email
      FROM member
  where nickname = '테스터1';
+-----------------------------------------------------------------------
+drop TABLE bbs;
+drop TABLE code;
 
 
+CREATE table code(
+    code_id   VARCHAR2(11),                         --코드
+    decode    VARCHAR2(30),                         --코드명
+    discript  clob,                                 --코드설명
+    pcode_id  varchar2(11),                         --상위코드
+    useyn     CHAR(1) default 'Y',       --사용여부 (사용:'Y',미사용:'N')
+    cdate    TIMESTAMP default systimestamp,       --생성일시
+    udate    TIMESTAMP default systimestamp        --수정일시
+);
 
+--기본키
+alter table code add constraint code_code_id_pk primary key (code_id);
+
+--외래키
+alter table code add constraint bbs_pcode_id_fk
+    foreign key(pcode_id) references code(code_id);
+
+--제약조건
+alter table code modify decode constraint code_decode_nn not null;
+alter table code modify useyn constraint code_useyn_nn not null;
+alter table code add constraint code_useyn_ck check(useyn in ('Y','N'));
+
+--샘플데이터 of code
+insert into code (code_id,decode,pcode_id,useyn) values ('F01','첨부',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0101','파일','F01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0102','이미지','F01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0103','프로파일','F01','Y');
+
+insert into code (code_id,decode,pcode_id,useyn) values ('B01','게시판',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('B0101','Spring','B01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('B0102','Database','B01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('B0103','Q_A','B01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('B0104','자유게시판','B01','Y');
+commit;
+
+select t1.pcode_id, t2.decode, t1.code_id, t1.decode
+    from code t1, code t2
+ where t1.pcode_id = t2.code_id
+    and t1.useyn = 'Y';
+    
+select t1.code_id code, t1.decode decode
+  from code t1, code t2
+ where t1.pcode_id = t2.code_id
+   and t1.useyn = 'Y'
+   and t1.pcode_id = 'B01';
+
+select t1.pcode_id pcode, t2.decode pdecode, t1.code_id ccode, t1.decode cdecode
+  from code t1, code t2
+ where t1.pcode_id = t2.code_id
+   and t1.useyn = 'Y';
+
+CREATE table bbs(
+    bbs_id      NUMBER(10),                  --게시글 번호
+    bcategory    VARCHAR2(11),               --분류카테고리
+    title       VARCHAR2(150),               --제목
+    email       VARCHAR2(50),                --email
+    nickname    VARCHAR2(30),                --별칭
+    hit         NUMBER(5) DEFAULT 0,         --조회수
+    bcontent     CLOB,                       --본문
+    pbbs_id     NUMBER(10),                  --부모 게시글번호
+    bgroup     NUMBER(10),                   --답글그룹
+    step        NUMBER(3) DEFAULT 0,         --답글단계
+    bindent      NUMBER(3) DEFAULT 0,        --답글들여쓰기
+    status      CHAR(1),                     --답글상태 (삭제:'D', 임시정장:'I')
+    cdate       TIMESTAMP default systimestamp,      --생성일시
+    udate       TIMESTAMP default systimestamp       --수정일시
+);
+
+--기본키
+alter table bbs add constraint bbs_bbs_id_pk primary key (bbs_id);
+--외래키
+alter table bbs add constraint bbs_bcategory_fk
+    foreign key(bcategory) references code(code_id);
+alter table bbs add constraint bbs_pbbs_id_fk
+    foreign key(pbbs_id) references bbs(bbs_id);
+alter table bbs add constraint bbs_email_fk
+    foreign key(email) references member(email);    
+    
+--제약조건
+alter table bbs modify bcategory constraint bbs_bcategory_nn not null;
+alter table bbs modify title constraint bbs_title_nn not null;
+alter table bbs modify email constraint bbs_email_nn not null;
+alter table bbs modify nickname constraint bbs_nickname_nn not null;
+alter table bbs modify bcontent constraint bbs_bcontent_nn not null;
+
+--시퀀스
+drop sequence bbs_bbs_id_seq;
+CREATE sequence bbs_bbs_id_seq;
+--널뛰기금지
+alter sequence bbs_bbs_id_seq nocache;
+--샘플
+insert into bbs (bbs_id,bcategory,title,email,nickname,bcontent,bgroup)
+    values (bbs_bbs_id_seq.nextval,'B0101','제목2','test1@kh.com','별칭','본문3', bbs_bbs_id_seq.currval);
+commit;
+
+--목록
+SELECT
+    bbs_id,
+    bcategory,
+    title,
+    email,
+    nickname,
+    hit,
+    bcontent,
+    pbbs_id,
+    bgroup,
+    step,
+    bindent,
+    status,
+    cdate,
+    udate
+FROM
+    bbs;
+    
+--조회   
+SELECT
+    bbs_id,
+    bcategory,
+    title,
+    email,
+    nickname,
+    hit,
+    bcontent,
+    pbbs_id,
+    bgroup,
+    step,
+    bindent,
+    status,
+    cdate,
+    udate
+FROM
+    bbs
+where bbs_id = 2;
+
+--삭제
+DELETE FROM bbs
+WHERE
+        bbs_id = 11;
+select * from bbs;
+rollback;
+
+--수정    
+ update bbs
+    set bcategory = 'B0102',
+        title ='수정후 제목2',
+        bcontent = '수정후 본문2',
+        udate = systimestamp
+ where bbs_id = 1;   
+ select * from bbs;
+rollback;
+
+SELECT COUNT(bbs_id) FROM bbs;
+
+----답글1   
+-- update bbs
+--    set step = step + 1,
+--        bindent = 1          
+-- where bbs_id = 1;   
+----답글2
+-- update bbs
+--    set step = step(bbs_id) + 1,
+--        bindent = bindent(bbs_id) + 1          
+-- where bbs_id = 21;  
+-- select * from bbs;
+rollback;
+
+
+update bbs
+   set hit = hit + 1
+   where bbs_id = 1;
+   
+commit;
+
+SELECT COUNT(bbs_id) FROM bbs;
+-------------------------------------------------------------------
+--조회
+select * from member;
+
+select * from notice;
+
+select * from bbs;
+
+select * from code;
 
