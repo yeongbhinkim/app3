@@ -2,7 +2,7 @@ package com.kh.app3.web;
 
 import com.kh.app3.domain.bbs.dao.Bbs;
 import com.kh.app3.domain.bbs.svc.BbsSVC;
-import com.kh.app3.domain.common.CodeDAO;
+import com.kh.app3.domain.common.code.CodeDAO;
 import com.kh.app3.web.form.bbs.*;
 import com.kh.app3.web.form.login.LoginMember;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,26 +56,19 @@ public class BbsController {
   //작성처리
   @PostMapping("/add")
   public String add(
-                    @Valid @ModelAttribute AddForm addForm,  // @Valid : 유효성체크
+//                    @Valid
+                    @ModelAttribute AddForm addForm,  // @Valid : 유효성체크
                     BindingResult bindingResult,  //폼객체에 바인딩될때 오류내용이 저장되는 객체
                     HttpSession session,
-                    RedirectAttributes redirectAttributes){
+                    RedirectAttributes redirectAttributes) throws IOException {
     log.info("addForm={}",addForm);
 
-    // 유효성체크 로직
+//     유효성체크 로직
     if (bindingResult.hasErrors()){
       log.info("add/bindingResult={}", bindingResult);
       return "bbs/addForm";
     }
-
-
     Bbs bbs = new Bbs();
-
-//    bbs.setBcategory(addForm.getBcategory());
-//    bbs.setTitle(addForm.getTitle());
-//    bbs.setBcontent(addForm.getBcontent());
-//    bbs.setEmail(addForm.getEmail());
-//    bbs.setNickname(addForm.getNickname());
     BeanUtils.copyProperties(addForm,bbs);
     //세션 가져오기
     LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -86,13 +80,16 @@ public class BbsController {
     bbs.setEmail(loginMember.getEmail());
     bbs.setNickname(loginMember.getNickname());
 
-
-    Long originId = bbsSVC.saveOrigin(bbs);
-
+    Long originId = 0l;
+    if(addForm.getFiles() == null) {
+      originId = bbsSVC.saveOrigin(bbs);
+    }else{
+      originId = bbsSVC.saveOrigin(bbs, addForm.getFiles());
+    }
     redirectAttributes.addAttribute("id",originId);
 
-    // <= 서버응답 302 get http://서버:port/bbs/10
-    // => 클라이언트요청 get http://서버:port/bbs/10
+//     <= 서버응답 302 get http://서버:port/bbs/10
+//     => 클라이언트요청 get http://서버:port/bbs/10
     return "redirect:/bbs/{id}";
   }
 

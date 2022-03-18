@@ -1,5 +1,7 @@
 package com.kh.app3.domain.common;
 
+import com.kh.app3.domain.common.code.CodeAll;
+import com.kh.app3.domain.common.code.CodeDAO;
 import com.kh.app3.web.Code;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

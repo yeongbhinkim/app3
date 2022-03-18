@@ -92,7 +92,7 @@
               </li>
               <li>
                 <span>취미</span>
-                <th:block th:each="ele : ${hobbys}">
+                <th:block th:each="ele : ${hobbies}">
                   <label for="" th:for="${#ids.next('hobby')}" th:text="${ele.value}"></label>
                   <input type="checkbox" name="" id="" value="" th:value="${ele.value}" th:field="*{hobby}">
                 </th:block>
