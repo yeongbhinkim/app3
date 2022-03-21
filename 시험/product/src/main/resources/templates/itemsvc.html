@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+</head>
+
+<body>
+
+  <form action="">
+    <p>상품명 <input type="text" id="pname"></p>
+    <p>상품수량 <input type="text" id="quantity"></p>  
+    <p>가격 <input type="text" id="price"></p>
+  </form>
+
+
+  <div><button id="createBtn">등록</button></div>
+  <div><button id="listBtn">목록</button></div>
+  <div><input type="text" id="detailItemId"><button id="detailBtn">조회</button></div>
+
+  <div>상품목록</div>
+  <div id="itemList"></div>
+
+  <script>
+    createBtn.addEventListener('click', create_f);
+    listBtn.addEventListener('click', list_f);
+    detailBtn.addEventListener('click', detail_f);
+
+    //상품등록
+    function create_f(e) {
+
+      const data = {};
+      data.name = pname.value;
+      data.quantity = quantity.value;    
+      data.price = price.value;
+
+
+      fetch('/api/product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)  // js객체 => json포맷 문자열 변환
+      }).then(res => res.json())         // json포맷 문자열 => js객체 변환
+        .then(res => { console.log(res); list_f(); })
+        .catch(err => { console.error('Err:', err) });
+      console.log('after fetch');
+    }
+
+    //상품목록 가져오기
+    function list_f(e) {
+      fetch('/api/product', {
+        method: 'GET'
+      }).then(res => res.json())
+        .then(res => printItemList(res))
+        .catch(err => { console.error('Err:', err) });
+    }
+
+    //상품목록 출력
+    function printItemList(res) {
+      console.log(res);
+      let html = '';
+
+      if (res.rtcd === '00') { //목록이 있는 경우
+        res.data.forEach(item => {
+          html += `<p>`;
+          html += `상품ID:${item.productId}, 상품:${item.name}, 상품수량:${item.quantity}, 상품가격:${item.price}`;
+          html += `<button data-item-id='${item.productId}' onclick='del_f(event)'>삭제</button>`;
+          html += `<button data-item-id='${item.productId}' onclick='update_f(event)'>수정</button>`;
+          html += `</p>`;
+        });
+      } else if (res.rtcd === '99') { //목록이 없는 경우
+        html = '';
+      } else {
+        alert(res.rtmsg);
+      }
+      itemList.innerHTML = html;
+    }
+
+    // //상품상세
+    // function detail_f(e) {
+    //   const url = `/api/product/${detailItemId.value}`
+    //   fetch(url, {
+    //     method: 'GET'
+    //   }).then(res => res.json())
+    //     .then(res => { console.log(res) })
+    //     .catch(err => { console.error('Err:', err) });
+    // } 
+
+     //상품상세
+   function detail_f(e) {    
+    const url = `/api/product/${detailItemId.value}`
+     fetch(url, {
+       method: 'GET'
+     }).then(res => res.json())
+       .then(res => {printItem(res)})
+       .catch(err => { console.error('Err:', err) });
+   } 
+
+       //상품목록 출력
+       function printItem(res) {
+         let html = '';
+         
+         if (res.rtcd === '00') { //목록이 있는 경우
+           // res = JSON.parse(res);
+           console.log(res);
+           console.log(res.data);
+
+          const $product = res.data;
+          html += `<p>`;
+          html += `상품ID:${$product.productId}, 상품:${$product.name}, 상품수량:${$product.quantity}, 상품가격:${$product.price}`;
+          html += `<button data-item-id='${$product.productId}' onclick='del_f(event)'>삭제</button>`;
+          html += `<button data-item-id='${$product.productId}' onclick='update_f(event)'>수정</button>`;
+          html += `</p>`;
+     
+     } else if (res.rtcd === '99') { //목록이 없는 경우
+       html = '';
+     } else {
+       alert(res.rtmsg);
+     }
+     itemList.innerHTML = html;
+   }  
+
+    //상품삭제
+    function del_f(e) {
+      const url = `/api/product/${e.target.dataset.itemId}`
+      fetch(url, {
+        method: 'DELETE'
+      }).then(res => res.json())
+        .then(res => { console.log(res); list_f(); })
+        .catch(err => { console.error('Err:', err) });
+    }
+
+    //상품수정
+    function update_f(e){
+
+      const data = {};
+      data.name = pname.value;
+      data.quantity = quantity.value;    
+      data.price = price.value;
+
+      const url = `/api/product/${e.target.dataset.itemId}`
+fetch(url, {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data) // js객체 => json포맷 문자열 변환
+}).then(res => res.json()) // json포맷 문자열 => js객체 변환
+  .then(res => { console.log(res); list_f(); })
+  .catch(err => { console.error('Err:', err) });
+}
+    
+
+
+    //     //상품수정
+    //     function up_f(e) {
+    //   const url = `/api/product/${e.target.dataset.itemId}`
+    //   fetch(url, {
+    //     method: 'PATCH'
+    //   }).then(res => res.json())
+    //     .then(res => { console.log(res); list_f(); })
+    //     .catch(err => { console.error('Err:', err) });
+    // }
+
+
+
+  </script>
+</body>
+
+</html>
