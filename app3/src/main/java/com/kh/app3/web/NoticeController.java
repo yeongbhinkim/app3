@@ -131,6 +131,7 @@ public class NoticeController {
     List<Notice> list = noticeSVC.findAll();
 
     List<Item> notices = new ArrayList<>();
+
     for (Notice notice : list) {
       Item item =new Item();
       item.setNoticeId(notice.getNoticeId());

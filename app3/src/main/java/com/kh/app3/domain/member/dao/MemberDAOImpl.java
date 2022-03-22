@@ -37,8 +37,8 @@ public class MemberDAOImpl implements MemberDAO{
   public Member insertMember(Member member) {
     //SQL문작성
     StringBuffer sql = new StringBuffer();
-    sql.append("insert into member ");
-    sql.append("values(member_member_id_seq.nextval, ?, ?, ? , ?, ?, ?)");
+    sql.append("insert into member " );
+    sql.append("values(member_member_id_seq.nextval, ?, ?, ? , ?, ?, ?) " );
 
     //SQL실행
     KeyHolder keyHolder = new GeneratedKeyHolder();

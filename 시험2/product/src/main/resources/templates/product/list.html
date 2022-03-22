@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 목록</title>
+<!--  <link rel="stylesheet" href="../css/notice/common.css" th:href="@{/css/notice/common.css}">-->
+  <style>
+    div {outline: 1px solid red;}
+    .cont {
+      display: grid;
+      grid-template-columns: 50px 5fr 100px 100px;
+      grid-auto-rows: 2em;
+    }
+    .btn-grp {
+      display: flex;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="content">
+      <h3>상품 목록</h3>
+      <hr>
+        <div class="cont">
+          <div class="col">NO</div>
+          <div class="col">@상품명</div>
+          <div class="col">@@수량</div>
+          <div class="col">상품가격</div>
+
+
+          <th:block th:each=" item : ${products}">
+
+            <div class="col" th:text="${item.productId}">2</div>
+            <div class="col">
+              <a href="" th:href="@{|/api/product/${item.productId}/detail|}" th:text="${item.name}">제목2</a>
+            </div>
+            <div class="col" th:text="${item.quantity}">2022/02/22</div>
+            <div class="col" th:text="${item.price}">2022/02/22</div>
+
+
+          </th:block>
+
+          <th:block th:remove="all">
+
+            <div class="col">1</div>
+            <div class="col">제목1</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">10</div>
+
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+            <div class="col">3</div>
+            <div class="col">제목3</div>
+            <div class="col">2022/02/22</div>
+            <div class="col">5</div>
+
+          </th:block>
+        </div>
+        <div class="btn-grp">
+          <button type="button" id="writeBtn">작성</button>
+        </div>
+    </div>
+    </div>
+
+    <script>
+      const $writeBtn = document.getElementById('writeBtn');
+      $writeBtn.addEventListener('click', ()=>{
+        const url = `/api/product`;
+        location.href=url
+      });
+    </script>
+
+</body>
+</html>

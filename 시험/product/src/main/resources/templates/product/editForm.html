@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 수정</title>
+<!--  <link rel="stylesheet" href="../css/notice/common.css" th:href="@{/css/notice/common.css}">-->
+
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="content">
+      <h3>상품 수정</h3>
+      <hr>
+      <form th:action th:method="patch" th:object="${editForm}"
+            th:data-product-id="*{productId}">
+
+        <input type="hidden" th:field="*{productId}">
+        <ul>
+          <li>
+            <span>@상품명</span>
+            <input type="text" readonly="readonly" th:field="*{name}">
+          </li>
+          <li>
+            <span>@@수량</span>
+            <input type="text" th:field="*{quantity}">
+          </li>
+          <li>
+            <span>상품가격</span>
+            <input type="text" th:field="*{price}">
+          </li>
+          <li>
+            <button type="button" id="modifyBtn">수정</button>
+            <button type="button" id="cancelBtn">취소</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+  <script>
+    const $modifyBtn = document.getElementById('modifyBtn');
+    const $cancelBtn = document.getElementById('cancelBtn');
+
+    $modifyBtn.addEventListener('click', e => {
+      const $form = e.target.closest('form');
+      const productId = $form.dataset.productId;
+      $form.action = `/api/product/${productId}`;
+
+      $form.submit();
+    });
+    $cancelBtn.addEventListener('click', e =>{
+      const $form = e.target.closest('form');
+      const productId = $form.dataset.productId;
+      const url = `/api/product/${productId}/detail`;
+      location.href = url;
+    });
+
+  </script>
+</body>
+</html>
