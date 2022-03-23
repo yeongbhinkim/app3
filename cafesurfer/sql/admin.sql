@@ -1,3 +1,6 @@
+--계정삭제
+--DROP USER c##surfer CASCADE;
+
 --계정생성
 CREATE USER c##surfer IDENTIFIED BY 1234
     DEFAULT TABLESPACE users
