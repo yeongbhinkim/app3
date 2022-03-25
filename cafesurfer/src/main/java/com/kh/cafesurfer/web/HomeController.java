@@ -1,4 +1,4 @@
-package com.kh.app3.web;
+package com.kh.cafesurfer.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,11 +13,8 @@ public class HomeController {
 
   @RequestMapping("/")
   public String home(HttpServletRequest request){
-//    log.trace("trace={}","home()호출됨");
-//    log.debug("debug={}","home()호출됨");
+
     log.info("info={}","home()호출됨");
-//    log.warn("warn={}","home()호출됨");
-//    log.error("error={}","home()호출됨");
 
     String view = null;
     HttpSession session = request.getSession(false);

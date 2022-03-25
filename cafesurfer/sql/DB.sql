@@ -423,6 +423,4 @@ ALTER TABLE shop_hashtag
  -- insert
  insert into shop_hashtag
  values(1, 1002);
- 
- commit;
         

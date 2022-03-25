@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 전</title>
+  <link rel="stylesheet" href="/css/home/home-page-style(수정).css">
+  <script defer src="/js/homeJs/detailChk.js"></script>
+  <script defer src="/js/homeJs/area.js"></script>
+  <script defer src="/js/homeJs/hashtagbox.js"></script>
+  <script defer src="/js/homeJs/reset.js"></script>
+
+
+  <!-- 울산만 태그 구현 -->
+</head>
+<body class="body">
+
+  <header>
+    <div class="header-wrap">
+      <div class="header-box">
+        <div class="header-content header-login">
+          <a class="login-btn" href="/logout">Log Out</a>
+        </div>
+        <div class="header-content header-signin">
+          <a class="signin-btn" href="#">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="util-wrap">
+
+    <div class="util-box">
+      <div class="logo-box">
+        <div class="logo">
+          <img src="../img/logo/logo-white.png" alt="">
+        </div>
+      </div>
+      <div class="search-box-wrap">
+        <div class="input_tag">
+          <li class="detail-box">
+            <a href="#" class="detail-icon">상세</a>
+          </li>
+          <ul class="input_tag__tags">
+            
+            <div class="hashtags">
+
+            </div>
+            <li class="input_tag__tags__input">
+              <input class="search-input" type="text" placeholder="Do The Best!" id="inputtext" onkeyup="backspace()">
+            </li>
+          </ul>
+          <div class="search-box">
+            <a href="#" class="search-icon">검색</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="location-selected-wrap">
+
+        <div class="condition-reset-wrap">   
+
+          <!-- <div class="reset-icon-box">
+            <a href="#" class="reset-icon">초기화</a>
+          </div> -->
+
+        </div>
+
+        <div class="areabox">
+
+        </div>
+        <!-- <div class="location-selected-boxes"> -->
+
+          <!-- <div class="location-selected-box-each">
+
+          </div> -->
+
+          <!-- <div class="location-selected-box-each">
+          <div class="location-selected">
+            <span class="location-selected-title">#울산남구</span>
+          </div>
+          <div class="location-delete">
+            <a class="location-delete-btn" href="#">X</a>
+          </div>
+        </div> -->
+
+        <!-- </div> -->
+      </div>
+
+      <!-- search-detail-header -->
+
+      <div class="menu">
+        <input type="checkbox" class="detailCHK" id="collapsible">
+        <div class="menuitems">
+          <div class="search-detail-wrap">
+            <div class="search-detail-header-wrap">
+              <div class="detail-location-wrap">
+                <div class="align-util align-location align-loc1">
+                  <a href="#" class="btn-loc1">시</a>
+                </div>
+                <div class="align-util align-location align-loc2">
+                  <a href="#" class="btn-loc2">구</a>
+                </div>
+              </div>
+              <div class="detail-hashtag-wrap">
+                <div class="align-util hashtag-main">
+                  <span>해시태그</span>
+                </div>
+                <div class="align-hashtag align-pop">
+                  <a href="#" class="btn-pop">인기순</a>
+                </div>
+                <div class="align-hashtag align-alpha">
+                  <a href="#" class="btn-alpha">글자순</a>
+                </div>
+                <div class="align-hashtag align-theme">
+                  <a href="#" class="btn-theme">테마별</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- search-detail-body -->
+          <div class="search-detail-content-wrap">
+
+            <div class="search-detail-content-box">
+
+              <div class="list-wrap list-wrap-loc1 com">
+                <ul class="list-loc1 com1 list">
+                  <li class="is_on">
+                    <!-- 처음은 전체로 만들어준다 -->
+                    <a href="#tab1" class="com3 btn All" style="z-index: 2;">전체</a>
+                  </li>
+                  <li>
+                    <a href="#tab2" class="com3 btn Busan">부산광역시</a>
+                  </li>
+                  <li>
+                    <a href="#tab3" class="com3 btn Ulsan">울산광역시</a>
+                  </li>
+
+                </ul>
+              </div>
+
+              <!-- com3 cont_area -->
+              <!-- <div class="list-wrap list-wrap-loc2"> -->
+
+              <div id="tab3" class="com2 cont">
+                <div class="com8 cont_area3">
+                  <div class="com7 asd3">
+                  </div>
+                </div>
+              </div>
+
+              <div id="tab2" class="com2 cont">
+                <div class="com8 cont_area2">
+                  <div class="com7 asd2">
+                  </div>
+                </div>
+              </div>
+
+              <div id="tab1" class="com2 cont">
+                <div class="com8 cont_area1">
+                  <div class="com7 asd1">
+                  </div>
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+
+
+
+
+            <div class="list-wrap list-wrap-hashtag">
+              <!-- <ul class="list-hashtag"> -->
+              <div class="scroll hashtagbox">
+                <li class="sub_item">
+                  <label title="레노버" class="aaa hashtagbox">
+                    <input type="checkbox" autocomplete="off" id="searchMakerRep6792" name="searchMakerRep6792">
+                    #레노버
+                  </label>
+                  <label title="에이수스" class="bbb hashtagbox">
+                    <input type="checkbox" autocomplete="off" id="searchMakerRep8888" name="searchMakerRep8888">
+                    #에이수스
+                    <!-- style="display:none" -->
+                  </label>
+                </li>
+              </div><!-- scroll hashtagbox -->
+              <!-- </ul> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>
