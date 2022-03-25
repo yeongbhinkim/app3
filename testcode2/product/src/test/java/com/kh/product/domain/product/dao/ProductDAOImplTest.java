@@ -25,23 +25,23 @@ class ProductDAOImplTest {
     product.setPrice(22300L);
 
     Product create = productDAO.create(product);
-    Assertions.assertThat(create.getProductId()).isEqualTo(25);
+    Assertions.assertThat(create.getName()).isEqualTo("커피10");
     log.info("create={}", create);
   }
 
   @Test
   @DisplayName("조회")
   void selectOne() {
-    Long productId = 12L;
+    Long productId = 4L;
     Product findByBbsItem = productDAO.selectOne(productId);
-    Assertions.assertThat(findByBbsItem.getName()).isEqualTo("아메리카노");
+    Assertions.assertThat(findByBbsItem.getName()).isEqualTo("커피우유2");
   }
 
   @Test
   @DisplayName("수정")
   void update() {
 
-    Long productId = 15L;
+    Long productId = 7L;
     //수정전
     Product beforeUpdatingItem = productDAO.selectOne(productId);
     beforeUpdatingItem.setName("수정후 제품");
@@ -65,7 +65,7 @@ class ProductDAOImplTest {
   @Test
   @DisplayName("삭제")
   void delete() {
-    Long productId = 16L;
+    Long productId = 8L;
     Product deletedBbsItemCount = productDAO.delete(productId);
 
     Assertions.assertThat(deletedBbsItemCount).isEqualTo(null);
@@ -79,7 +79,7 @@ class ProductDAOImplTest {
   void selectAll() {
     List<Product> list = productDAO.selectAll();
 
-    Assertions.assertThat(list.get(0).getName()).isEqualTo("아메리카노");
+    Assertions.assertThat(list.get(0).getName()).isEqualTo("커피우유2");
     for (Product product : list) {
       log.info(product.toString());
     }

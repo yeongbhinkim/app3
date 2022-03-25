@@ -3,6 +3,8 @@ package com.kh.app3.web;
 import com.kh.app3.domain.bbs.dao.Bbs;
 import com.kh.app3.domain.bbs.svc.BbsSVC;
 import com.kh.app3.domain.common.code.CodeDAO;
+import com.kh.app3.domain.common.file.UploadFile;
+import com.kh.app3.domain.common.file.svc.UploadFileSVC;
 import com.kh.app3.web.form.bbs.*;
 import com.kh.app3.web.form.login.LoginMember;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.List;
 public class BbsController {
   private final BbsSVC bbsSVC;
   private final CodeDAO codeDAO;
+  private final UploadFileSVC uploadFileSVC;
 
 //게시판 코드,디코드 가져오기
   @ModelAttribute("classifier")
@@ -81,6 +84,7 @@ public class BbsController {
     bbs.setNickname(loginMember.getNickname());
 
     Long originId = 0l;
+    //파일첨부유무
     if(addForm.getFiles() == null) {
       originId = bbsSVC.saveOrigin(bbs);
     }else{
@@ -130,11 +134,15 @@ public class BbsController {
 //    detailForm.setHit(detailBbs.getHit());
 
     BeanUtils.copyProperties(detailBbs,detailForm);
-
-
-
     model.addAttribute("detailForm",detailForm);
-    
+
+    //첨부조회
+    List<UploadFile> attachFiles = uploadFileSVC.getFilesByCodeWithRid(detailBbs.getBcategory(), detailBbs.getBbsId());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
+
 //      return detailForm;
     return "bbs/detailForm";
   }
@@ -157,6 +165,12 @@ public class BbsController {
     model.addAttribute("editForm", editForm);
 
     log.info("editForm={}",editForm);
+    //첨부조회
+    List<UploadFile> attachFiles = uploadFileSVC.getFilesByCodeWithRid(bbs.getBcategory(), bbs.getBbsId());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
 
     return "bbs/editForm";
   }
@@ -167,7 +181,7 @@ public class BbsController {
                      BindingResult bindingResult,
                      RedirectAttributes redirectAttributes
   ){
-    if (bindingResult.hasErrors()){
+    if(bindingResult.hasErrors()){
       return "bbs/editForm";
     }
 
@@ -175,6 +189,11 @@ public class BbsController {
     BeanUtils.copyProperties(editForm, bbs);
     bbsSVC.updateByBbsId(id,bbs);
 
+    if(editForm.getFiles() == null) {
+      bbsSVC.updateByBbsId(id, bbs);
+    }else{
+      bbsSVC.updateByBbsId(id, bbs, editForm.getFiles());
+    }
     redirectAttributes.addAttribute("id",id);
     return "redirect:/bbs/{id}";
   }
