@@ -5,8 +5,11 @@ import com.kh.app3.domain.bbs.dao.BbsDAO;
 import com.kh.app3.domain.common.file.UploadFile;
 import com.kh.app3.domain.common.file.dao.UploadFileDAO;
 import com.kh.app3.domain.common.file.svc.UploadFileSVC;
+import com.kh.app3.domain.common.paging.RecordCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +28,7 @@ public class BbsSVCImpl implements BbsSVC {
 
   private final BbsDAO bbsDAO;
   private final UploadFileSVC uploadFileSVC;
+
 
   private String CODE = "F0101";
 
@@ -51,6 +55,16 @@ public class BbsSVCImpl implements BbsSVC {
   @Override
   public List<Bbs> findAll() {
     return bbsDAO.findAll();
+  }
+
+  @Override
+  public List<Bbs> findAll(int startRec, int endRec) {
+    return bbsDAO.findAll(startRec,endRec);
+  }
+
+  @Override
+  public List<Bbs> findAll(String category, int startRec, int endRec) {
+    return bbsDAO.findAll(category,startRec,endRec);
   }
 
   //상세조회
@@ -102,5 +116,10 @@ public class BbsSVCImpl implements BbsSVC {
   @Override
   public int totalCount() {
     return bbsDAO.totalCount();
+  }
+
+  @Override
+  public int totalCount(String bcategory) {
+    return bbsDAO.totalCount(bcategory);
   }
 }

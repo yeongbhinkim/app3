@@ -29,6 +29,8 @@ public interface BbsSVC {
      * @return
      */
     List<Bbs> findAll();
+    List<Bbs> findAll(int startRec, int endRec);
+    List<Bbs> findAll(String category, int startRec, int endRec);
 
     /**
      * 상세조회
@@ -74,5 +76,5 @@ public interface BbsSVC {
      * @return 게시글 전체건수
      */
     int totalCount();
-
+    int totalCount(String bcategory);
   }
