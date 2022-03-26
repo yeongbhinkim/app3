@@ -17,6 +17,9 @@ public interface BbsDAO {
   List<Bbs> findAll();
   List<Bbs> findAll(String category);
 
+  List<Bbs> findAll(int startRec, int endRec);
+  List<Bbs> findAll(String category, int startRec, int endRec);
+
   /**
    * 상세조회
    * @param id 게시글번호
@@ -59,5 +62,5 @@ public interface BbsDAO {
    * @return 게시글 전체건수
    */
   int totalCount();
-
+  int totalCount(String bcategory);
 }

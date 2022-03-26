@@ -1,5 +1,4 @@
 package com.kh.cafesurfer.web.form.memberShip;
-
 import lombok.Data;
 
 @Data
@@ -16,5 +15,5 @@ public class DetailForm {
   private Long memberAge;         //  MEMBER_AGE	NUMBER(3,0)
 
   private String memberTel;       //  MEMBER_TEL	VARCHAR2(15 BYTE)
-  
+
 }

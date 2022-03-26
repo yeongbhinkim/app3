@@ -1,5 +1,4 @@
 package com.kh.cafesurfer.web.form.memberShip;
-
 import lombok.Data;
 
 import javax.validation.constraints.Email;

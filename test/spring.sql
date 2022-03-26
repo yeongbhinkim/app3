@@ -343,6 +343,44 @@ INSERT INTO uploadfile (
    'image/png'   
 );
 DELETE from uploadfile;
+-----------------------------
+select t1.no "번호", t1.email "이메일", t1.nickname "별칭"
+from(
+    select
+        row_number() over (order by member_id) no,
+        email,
+        nickname
+    from member) t1
+where t1.no between 2 and 4;
+-----------------------------
+
+SELECT t1.*
+    from(
+SELECT
+    ROW_NUMBER() OVER (ORDER BY bgroup DESC, step ASC) no,
+    bbs_id,
+    bcategory,
+    title,
+    email,
+    nickname,
+    hit,
+    bcontent,
+    pbbs_id,
+    bgroup,
+    step,
+    bindent,
+    status,
+    cdate,
+    udate
+FROM
+    bbs
+    where bcategory ='B0101' ) t1
+where t1.no BETWEEN 11 and 20;
+
+
+
+
+
 ROLLBACK;
 DELETE from bbs;
 select * from uploadfile;
