@@ -75,10 +75,17 @@ create sequence review_review_id_seq
     nocycle
     nocache;
 
--- 테이블 생성
+---- 테이블 생성
+--CREATE TABLE bookmark (
+--    bookmark_checked NUMBER DEFAULT 0 NOT NULL,
+--    bookmark_chkdate TIMESTAMP,
+--    member_id        NUMBER(5) NOT NULL,
+--    shop_id          NUMBER(5) NOT NULL
+--);
+drop TABLE bookmark;
 CREATE TABLE bookmark (
     bookmark_checked NUMBER DEFAULT 0 NOT NULL,
-    bookmark_chkdate TIMESTAMP,
+    bookmark_chkdate timestamp default systimestamp,
     member_id        NUMBER(5) NOT NULL,
     shop_id          NUMBER(5) NOT NULL
 );
@@ -312,7 +319,9 @@ ALTER TABLE shop_hashtag
  -- 회원정보
  -- insert
  insert into membership
- values(membership_member_id_seq.nextval, '홍길순', 'hong3@kh.com', '여', 20, '010-5678-7891', default);
+ values(membership_member_id_seq.nextval,  'hong3@kh.com','1234','홍길순', '여', 20, '010-5678-7891', default);
+  insert into membership
+ values(membership_member_id_seq.nextval,  'hong8@kh.com','1234','홍길동', '남', 70, '010-5767-4561', default);
 
  -- update
  update membership set member_tel='010-4567-8901'
@@ -320,7 +329,7 @@ ALTER TABLE shop_hashtag
 
  -- delete
  delete from membership
- where member_id = 1;
+ where member_id = 4;
 
 -- read
  select * from membership;
@@ -329,7 +338,16 @@ ALTER TABLE shop_hashtag
  -- insert
  insert into coffeeshop
  values(coffeeshop_shop_id_seq.nextval, '카페 솔츠', '울산 남구 봉월로8번길 18 1층', '052-710-5252', default, default, default, 1, 0, default);
-
+ insert into coffeeshop
+ values(coffeeshop_shop_id_seq.nextval, '카페 솔츠2', '울산 남구 봉월로8번길 18 2층', '052-888-8888', default, default, default, 1, 0, default); 
+ insert into coffeeshop
+ values(coffeeshop_shop_id_seq.nextval, '카페 솔츠3', '울산 남구 봉월로8번길 18 3층', '052-777-5252', default, default, default, 1, 0, default); 
+ insert into coffeeshop
+ values(coffeeshop_shop_id_seq.nextval, '카페 솔츠4', '울산 남구 봉월로8번길 18 4층', '052-555-5252', default, default, default, 1, 0, default);
+  insert into coffeeshop
+ values(coffeeshop_shop_id_seq.nextval, '카페 솔츠5', '울산 남구 봉월로8번길 18 5층', '052-111-5252', default, default, default, 1, 0, default);
+ 
+ commit;
  -- update
  update coffeeshop set shop_name = '스타벅스'
  where shop_id = 1;
@@ -385,15 +403,21 @@ ALTER TABLE shop_hashtag
  -- 찜하기
  -- insert
  insert into bookmark
- values(0, null, 2, 2);
-
- -- update
- update bookmark set bookmark_checked = 1, bookmark_chkdate = systimestamp
- where coffeeshop_shop_id = 1
- and membership_member_id = 1;
+ values(DEFAULT, default, 3, 2);
+ 
+--DELETE
+DELETE FROM bookmark
+WHERE   
+        member_id = 2
+    AND shop_id = 2;   
+    
+--select
+ select * from bookmark
+    WHERE member_id = 1;
 
  select * from bookmark;
-
+ 
+commit;
  -- 해시태그 식별
  -- (메뉴 1001-2000)
  -- insert
