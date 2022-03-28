@@ -323,13 +323,14 @@ ALTER TABLE shop_hashtag
   insert into membership
  values(membership_member_id_seq.nextval,  'hong8@kh.com','1234','홍길동', '남', 70, '010-5767-4561', default);
 
+commit;
  -- update
  update membership set member_tel='010-4567-8901'
  where member_id = 1;
 
  -- delete
  delete from membership
- where member_id = 4;
+ where member_id = 1;
 
 -- read
  select * from membership;
