@@ -1,0 +1,19 @@
+URL 링크
+
+/bbs/list/1?category='B0101'
+
+URL 표현식 @{}
+
+case1)
+th:href="@{|/bbs/list/${reqPage}?category='${code}'|}";
+
+case2)
+th:href="@{/bbs/list/{reqPage} (reqRage=${reqRage}, category=${code})}";
+th:href="@{/bbs/list/{reqPage}/{abc}(reqRage=${reqRage}, abc=${abc})}";
+
+전처리 : __${}__ 표현식이 있을 때 먼저 계산함
+
+? : 엘비스문법(3항연산식의 단축표현)
+
+__  : no operation 동작하지 않음.
+

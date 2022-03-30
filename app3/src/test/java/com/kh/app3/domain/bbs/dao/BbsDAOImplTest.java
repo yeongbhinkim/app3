@@ -38,7 +38,7 @@ class BbsDAOImplTest {
   }
 
   @Test
-  @DisplayName("등록")
+  @DisplayName("다수의 원글 작성")
   void saveOrigins() {
 
       for(int i=1; i<350; i++) {

@@ -35,7 +35,7 @@ public class BbsController {
   private final UploadFileSVC uploadFileSVC;
 
   @Autowired
-  @Qualifier("pc10")
+  @Qualifier("pc10")  //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
   private PageCriteria pc;
 
 //게시판 코드,디코드 가져오기
@@ -161,6 +161,7 @@ public class BbsController {
     List<Bbs> list = null;
     //게시물 목록 전체
     if(category == null || StringUtils.isEmpty(cate)) {
+
       //총레코드수
       pc.setTotalRec(bbsSVC.totalCount());
       list = bbsSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
