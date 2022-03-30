@@ -1,17 +1,26 @@
 'use strict';
 
+const $bbs = document.querySelector('.bbs-wrap');
+const category = ($bbs?.dataset.code)? $bbs.dataset.code : '';
 
-  //취소 상세
+  //상세
   cancelBtn?.addEventListener('click',e=>{
-    const url = `/bbs/${bbsId.value}`;
+    const url = `/bbs/${bbsId.value}?category=${category}`;
     location.href= url;
   });
 
-
+//저장
+const $saveBtn = document.getElementById('saveBtn');
+$saveBtn?.addEventListener("click", e=>{
+  editForm.action = `${editForm.action}?category=${category}`;
+  editForm.submit();
+});
 
   //목록
   listBtn?.addEventListener('click',e=>{
-    location.href="/bbs";
+      const url = `/bbs/list?category=${category}`;
+      console.log('url='+url);
+      location.href=url;
   });
 
 //첨부파일삭제
