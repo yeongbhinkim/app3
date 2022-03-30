@@ -188,6 +188,31 @@ class BbsDAOImplTest {
 
     Assertions.assertThat(totalCtn).isEqualTo(size);
   }
+  
+  @Test
+  @DisplayName("게시글 검색-전체")
+  void searchBbs(){
+    BbsFirterCondition bbsFirterConditio = new BbsFirterCondition(
+       "" ,1,10,"TC","제목"
+    );
 
+    List<Bbs> list = bbsDAO.findAll(bbsFirterConditio);
+    log.info("list={}",list);
+
+  }
+
+  @Test
+  @DisplayName("게시글 검색-분류")
+  void searchBbsByCategory(){
+    BbsFirterCondition bbsFirterConditio = new BbsFirterCondition(
+        "B0104",1,10,"TC","제목"
+    );
+
+    List<Bbs> list = bbsDAO.findAll(bbsFirterConditio);
+    for (Bbs bbs : list) {
+    log.info("list={}",list);
+    }
+
+  }
 
 }

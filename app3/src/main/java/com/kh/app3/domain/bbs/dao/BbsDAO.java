@@ -21,6 +21,15 @@ public interface BbsDAO {
   List<Bbs> findAll(String category, int startRec, int endRec);
 
   /**
+   * 검색
+   * @param bbsFirterCondition 분류, 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  List<Bbs> findAll(BbsFirterCondition bbsFirterCondition);
+
+
+
+  /**
    * 상세조회
    * @param id 게시글번호
    * @return
@@ -63,4 +72,5 @@ public interface BbsDAO {
    */
   int totalCount();
   int totalCount(String bcategory);
+  int totalCount(BbsFirterCondition bbsFirterCondition);
 }

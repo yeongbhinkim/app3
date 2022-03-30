@@ -1,6 +1,7 @@
 package com.kh.app3.domain.bbs.svc;
 
 import com.kh.app3.domain.bbs.dao.Bbs;
+import com.kh.app3.domain.bbs.dao.BbsFirterCondition;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -31,6 +32,13 @@ public interface BbsSVC {
     List<Bbs> findAll();
     List<Bbs> findAll(int startRec, int endRec);
     List<Bbs> findAll(String category, int startRec, int endRec);
+
+    /**
+     * 검색
+     * @param bbsFirterCondition 분류, 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+     * @return
+     */
+    List<Bbs> findAll(BbsFirterCondition bbsFirterCondition);
 
     /**
      * 상세조회
@@ -77,4 +85,5 @@ public interface BbsSVC {
      */
     int totalCount();
     int totalCount(String bcategory);
+    int totalCount(BbsFirterCondition bbsFirterCondition);
   }
