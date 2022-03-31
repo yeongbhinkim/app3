@@ -215,7 +215,8 @@ public class BbsDAOImpl implements BbsDAO {
     sql.append("     where ");
 
     //분류
-    sql = dynamicQuery(bbsFirterCondition, sql);;
+    sql = dynamicQuery(bbsFirterCondition, sql);
+    ;
 
     sql.append(" ) t1 ");
     sql.append(" where t1.no between ? and ? ");
@@ -413,103 +414,88 @@ public class BbsDAOImpl implements BbsDAO {
   //전체건수
   @Override
   public int totalCount() {
-//    StringBuffer sql = new StringBuffer();
-//
-//    sql.append(" select count(*) from bbs ");
-//    int totalCtn = jdbcTemplate.queryForObject(sql.toString(), Integer.class);
 
-    String sql = " select count(*) from bbs ";
-//queryForObject 1개 초과시 예외 발생
-    Integer totalCtn = jdbcTemplate.queryForObject(sql, Integer.class);
+    String sql = "select count(*) from bbs";
 
-    return totalCtn;
+    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
+
+    return cnt;
   }
 
   @Override
   public int totalCount(String bcategory) {
-    String sql = " select count(*) from bbs where bcategory= ? ";
 
-//queryForObject 1개 초과시 예외 발생
-    Integer totalCtn = jdbcTemplate.queryForObject(sql, Integer.class, bcategory);
+    String sql = "select count(*) from bbs where bcategory = ? ";
 
-    return totalCtn;
+    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class, bcategory);
+
+    return cnt;
   }
 
   @Override
   public int totalCount(BbsFirterCondition bbsFirterCondition) {
+
     StringBuffer sql = new StringBuffer();
 
-    sql.append("  select count(*) ");
-    sql.append("  from bbs ");
-    sql.append("  where ");
+    sql.append("select count(*) ");
+    sql.append("  from bbs  ");
+    sql.append(" where  ");
 
     sql = dynamicQuery(bbsFirterCondition, sql);
 
-
     Integer cnt = 0;
-    
     //게시판 전체 검색 건수
-    if (StringUtils.isEmpty(bbsFirterCondition.getCategory())) {
+    if(StringUtils.isEmpty(bbsFirterCondition.getCategory())) {
       cnt = jdbcTemplate.queryForObject(
-          sql.toString(),
-          Integer.class,
-          bbsFirterCondition.getSearchType(),
-          bbsFirterCondition.getKeyword()
+          sql.toString(), Integer.class
       );
       //게시판 분류별 검색 건수
-    } else {
+    }else{
       cnt = jdbcTemplate.queryForObject(
-          sql.toString(),
-          Integer.class,
-          bbsFirterCondition.getCategory(),
-          bbsFirterCondition.getSearchType(),
-          bbsFirterCondition.getKeyword()
+          sql.toString(), Integer.class,
+          bbsFirterCondition.getCategory()
       );
     }
-
 
     return cnt;
   }
 
   private StringBuffer dynamicQuery(BbsFirterCondition bbsFirterCondition, StringBuffer sql) {
     //분류
-    if (StringUtils.isEmpty(bbsFirterCondition.getCategory())) {
+    if(StringUtils.isEmpty(bbsFirterCondition.getCategory())){
 
-    } else {
-      sql.append("      bcategory = ? ");
-
+    }else{
+      sql.append("       bcategory = ? ");
     }
 
-    //분류, 검색유형 존재, 검색어 존재
-    if (!StringUtils.isEmpty(bbsFirterCondition.getCategory()) &&
+    //분류,검색유형,검색어 존재
+    if(!StringUtils.isEmpty(bbsFirterCondition.getCategory()) &&
         !StringUtils.isEmpty(bbsFirterCondition.getSearchType()) &&
-        !StringUtils.isEmpty(bbsFirterCondition.getKeyword())) {
+        !StringUtils.isEmpty(bbsFirterCondition.getKeyword())){
 
-      sql.append(" and ");
+      sql.append(" AND ");
     }
 
     //검색유형
-    switch (bbsFirterCondition.getSearchType()) {
-      case "TC":  //제목 + 내용 "+bbsFirterCondition.getKeyword()+"
-        sql.append("      ( title     like '%" + bbsFirterCondition.getKeyword() + "%' ");
-        sql.append("      or bcontent like '%" + bbsFirterCondition.getKeyword() + "%') ");
+    switch (bbsFirterCondition.getSearchType()){
+      case "TC":  //제목 + 내용
+        sql.append("    (  title    like '%"+ bbsFirterCondition.getKeyword()+"%' ");
+        sql.append("    or bcontent like '%"+ bbsFirterCondition.getKeyword()+"%' )");
         break;
       case "T":   //제목
-        sql.append("       title       like '%" + bbsFirterCondition.getKeyword() + "%' ");
+        sql.append("       title    like '%"+ bbsFirterCondition.getKeyword()+"%' ");
         break;
       case "C":   //내용
-        sql.append("       bcontent    like '%" + bbsFirterCondition.getKeyword() + "%' ");
+        sql.append("       bcontent like '%"+ bbsFirterCondition.getKeyword()+"%' ");
         break;
       case "E":   //아이디(이메일)
-        sql.append("       email       like '%" + bbsFirterCondition.getKeyword() + "%' ");
+        sql.append("       email    like '%"+ bbsFirterCondition.getKeyword()+"%' ");
         break;
       case "N":   //별칭
-        sql.append("       nickname    like '%" + bbsFirterCondition.getKeyword() + "%' ");
+        sql.append("       nickname like '%"+ bbsFirterCondition.getKeyword()+"%' ");
         break;
       default:
-
     }
-
     return sql;
   }
 }

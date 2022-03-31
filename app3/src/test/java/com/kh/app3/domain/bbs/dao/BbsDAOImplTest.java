@@ -188,7 +188,7 @@ class BbsDAOImplTest {
 
     Assertions.assertThat(totalCtn).isEqualTo(size);
   }
-  
+
   @Test
   @DisplayName("게시글 검색-전체")
   void searchBbs(){
@@ -213,6 +213,29 @@ class BbsDAOImplTest {
     log.info("list={}",list);
     }
 
+  }
+
+
+  @Test
+  @DisplayName("게시글 건수-전체")
+  void totalCountWithSearch(){
+    BbsFirterCondition bbsFirterConditio = new BbsFirterCondition(
+        "","TC","제목"
+    );
+
+    int cnt = bbsDAO.totalCount(bbsFirterConditio);
+    log.info("count={}", cnt);
+  }
+
+  @Test
+  @DisplayName("게시글 건수-카테고리별")
+  void totalCountWithSearchByCategory(){
+    BbsFirterCondition bbsFirterConditio = new BbsFirterCondition(
+        "B0104","TC","제목"
+    );
+
+    int cnt = bbsDAO.totalCount(bbsFirterConditio);
+    log.info("count={}", cnt);
   }
 
 }
