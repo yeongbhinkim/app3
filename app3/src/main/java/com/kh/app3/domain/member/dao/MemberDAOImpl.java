@@ -214,7 +214,7 @@ public class MemberDAOImpl implements MemberDAO{
   public Member login(String email, String passwd) {
 
     StringBuffer sql = new StringBuffer();
-    sql.append("select member_id as member, email, nickname ");
+    sql.append("select member_id, email, nickname, gubun ");
     sql.append("  from member ");
     sql.append(" where email =? and passwd = ? ");
 
@@ -244,6 +244,33 @@ public class MemberDAOImpl implements MemberDAO{
 //
 //    return DataAccessUtils.singleResult(list);  // 요소가 없으면 null, 1개 있으면 그 요소를 반환
 //  }
+
+  //프로파일 사진 조회
+  @Override
+  public byte[] findPicOfProfile(Long memberId) {
+    String sql = "select pic from member where member_id = ? ";
+    return jdbcTemplate.queryForObject(sql, byte[].class ,memberId);
+  }
+
+  //프로파일 사진 변경
+  @Override
+  public int updatePicOfProfile(Long memberId, byte[] pic) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("update member ");
+    sql.append("   set pic = ? ");
+    sql.append(" where member_id = ?");
+    return jdbcTemplate.update(sql.toString(), pic, memberId);
+  }
+
+  //프로파일 별칭 변경
+  @Override
+  public int updateNickNameOfProfile(Long memberId, String nickname) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("update member ");
+    sql.append("   set nickname = ? ");
+    sql.append(" where member_id = ?");
+    return jdbcTemplate.update(sql.toString(), nickname, memberId);
+  }
 
   /**
    * 비밀번호 일치여부 체크

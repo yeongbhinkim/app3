@@ -3,12 +3,16 @@ package com.kh.app3.web;
 import com.kh.app3.domain.member.Member;
 import com.kh.app3.domain.member.svc.MemberSVC;
 import com.kh.app3.web.api.ApiResult;
+import com.kh.app3.web.form.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -66,5 +70,55 @@ public class ApiMemberController {
       result = new ApiResult<>("99", "fail", "찾고자하는 아이디가 없습니다");
     }
     return result;
+  }
+
+  //프로파일 이미지 조회
+  @GetMapping("/api/members/{memberId}/pfimg")
+  public ResponseEntity<byte[]> findPicOfProfile(@PathVariable Long memberId){
+
+    byte[] picOfProfile = memberSVC.findPicOfProfile(memberId);
+    return ResponseEntity.ok()  //응답코드 200
+        .body(picOfProfile);
+  }
+
+  //프로파일 이미지 수정
+  @PutMapping("/api/members/{memberId}/pfimg")
+  public ResponseEntity<ApiResult<String>> upfdatePicOfProfile(
+      @PathVariable Long memberId,
+      @RequestBody(required = false) byte[] file
+  ) throws IOException {
+
+    int affectedRow = memberSVC.updatePicOfProfile(memberId, file);
+    ApiResult<String> result = null;
+    if(affectedRow == 1) {
+      result = new ApiResult<>("00", "success", "수정");
+    }else{
+      result = new ApiResult<>("99", "fail", "실패");
+    }
+    return ResponseEntity.ok()  //응답코드 200
+        .body(result);
+  }
+
+  //프로파일 별칭 수정
+  @ResponseBody
+  @PutMapping("/api/members/{memberId}/pfnick")
+  public ResponseEntity<ApiResult<String>> upfdateNicknameOfProfile(
+      @PathVariable Long memberId,
+      @RequestBody String nicknameOfProfile,
+      HttpSession session
+  ){
+    log.info("nicknameOfProfile={}",nicknameOfProfile);
+    int affectedRow =memberSVC.updateNickNameOfProfile(memberId,nicknameOfProfile);
+    ApiResult<String> result = null;
+    if(affectedRow == 1) {
+      result = new ApiResult<>("00", "success", "수정");
+      LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
+      loginMember.setNickname(nicknameOfProfile);
+      session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+    }else{
+      result = new ApiResult<>("99", "fail", "실패");
+    }
+    return ResponseEntity.ok()  //응답코드 200
+        .body(result);
   }
 }

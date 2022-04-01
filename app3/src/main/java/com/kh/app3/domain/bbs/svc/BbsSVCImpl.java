@@ -119,6 +119,19 @@ public class BbsSVCImpl implements BbsSVC {
     return bbsDAO.saverReply(pbbsId, replybbs);
   }
 
+  @Override
+  public Long saveReply(Long pbbsId, Bbs replyBbs, List<MultipartFile> files) {
+
+    //1)답글 작성
+    Long bbsId = bbsDAO.saverReply(pbbsId, replyBbs);
+
+    //2)첨부 저장
+    uploadFileSVC.addFile(replyBbs.getBcategory(),bbsId,files);
+
+    return bbsId;
+  }
+
+
   //전체건수
   @Override
   public int totalCount() {

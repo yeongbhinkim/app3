@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.bbs-wrap .ck-editor__editable{min-height:20rem;}
+
   main {display:flex; justify-content: center;}
     /*.bbs-wrap * {outline: 1px solid red;}*/
     .bbs-wrap {

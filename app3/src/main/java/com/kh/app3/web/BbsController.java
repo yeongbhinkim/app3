@@ -113,7 +113,7 @@ public class BbsController {
 
     Long originId = 0l;
     //파일첨부유무
-    if (addForm.getFiles().size() > 0) {
+    if (addForm.getFiles().size() == 0) {
       originId = bbsSVC.saveOrigin(bbs);
     } else {
       originId = bbsSVC.saveOrigin(bbs, addForm.getFiles());
@@ -307,7 +307,7 @@ public class BbsController {
     BeanUtils.copyProperties(editForm, bbs);
     bbsSVC.updateByBbsId(id, bbs);
 
-    if (editForm.getFiles().size() > 0) {
+    if (editForm.getFiles().size() == 0) {
       bbsSVC.updateByBbsId(id, bbs);
     } else {
       bbsSVC.updateByBbsId(id, bbs, editForm.getFiles());
@@ -357,8 +357,17 @@ public class BbsController {
 
     //부모글의 bbsId,bgroup, step, bindent 참조
     appendInfoOfparentBbs(id, replyBbs);
-    //답글저장(return) 답글번호
-    Long replyBbsId = bbsSVC.saverReply(id, replyBbs);
+
+
+    //답글저장(return 답글번호)
+    Long replyBbsId = 0L;
+
+    if(replyForm.getFiles().size() == 0) {
+      replyBbsId = bbsSVC.saverReply(replyBbsId, replyBbs);
+
+    }else{
+      replyBbsId = bbsSVC.saveReply(id, replyBbs, replyForm.getFiles());
+    }
 
     redirectAttributes.addAttribute("id", replyBbsId);
     redirectAttributes.addAttribute("category", cate);

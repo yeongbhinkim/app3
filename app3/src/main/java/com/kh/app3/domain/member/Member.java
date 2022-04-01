@@ -15,6 +15,8 @@ public class Member {
   private String gender;
   private String hobby;
   private String region;
+  private String gubun;
+  private byte[] pic;
 
 
   public Member(String email, String passwd, String nickname) {
@@ -23,27 +25,3 @@ public class Member {
     this.nickname = nickname;
   }
 }
-//  public Member(Long memberId, String email, String passwd, String nickname) {
-//    this.member_Id = memberId;
-//    this.email = email;
-//    this.passwd = passwd;
-//    this.nickname = nickname;
-//  }
-
-
-//  public Long getMember_Id() {
-//    return member_Id;
-//  }
-//
-//  public String getEmail() {
-//    return email;
-//  }
-//
-//  public String getPasswd() {
-//    return passwd;
-//  }
-//
-//  public String getNickname() {
-//    return nickname;
-//  }
-//}

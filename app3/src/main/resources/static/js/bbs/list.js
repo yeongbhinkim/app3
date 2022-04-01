@@ -1,5 +1,6 @@
 'use strict';
 
+
 const $bbs = document.querySelector('.bbs-wrap');
 const category = ($bbs?.dataset.code)? $bbs.dataset.code : '';
 

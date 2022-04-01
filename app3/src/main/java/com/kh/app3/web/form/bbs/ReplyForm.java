@@ -1,10 +1,12 @@
 package com.kh.app3.web.form.bbs;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class ReplyForm {
@@ -24,4 +26,6 @@ public class ReplyForm {
   @NotBlank
   @Size(min = 5)
   private String bcontent;      //내용 BCONTENT	CLOB
+
+  private List<MultipartFile> files;   //첨부파일
 }
